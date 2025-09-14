@@ -35,19 +35,40 @@ python manage.py loaddata dashboard/fixtures/initial_data.json
 python manage.py runserver
 ```
 
-## Penggunaan
+## Alur penggunaan aplikasi
 
-1. Buka browser dan akses `http://localhost:8000/`.
-2. **Login terlebih dahulu**.
-   - Jika belum punya akun, silakan **register** dulu.
-3. Setelah login, akan diarahkan ke halaman `/` (dashboard).
+1. **Dashboard (Monolith / Django Template)**
+
+   - Buka browser dan akses `http://localhost:8000/`.
+   - **Login terlebih dahulu** (jika belum punya akun, silakan register).
+   - Setelah login, akan diarahkan ke halaman `/` (dashboard).
    - Di dashboard, user bisa memilih menu **Country** atau **Category**.
-   - User bisa **membuat, mengedit, atau menghapus** Country / Category yang sudah dibuat (CRUD).
-4. User juga bisa melakukan **logout** dari dashboard.
+   - User bisa **membuat, mengedit, atau menghapus** Country / Category (CRUD).
+   - User juga bisa melakukan **logout** dari dashboard.
+
+2. **API (REST)**
+
+   - API hanya digunakan untuk pencarian dan kalkulasi freight (tidak ada CRUD country/category lewat API).
+   - Semua endpoint API berada di `/api/...`.
 
 ---
 
 ### API Endpoints
+
+#### Authentication
+
+| Endpoint        | Method | Payload                                                                            | Keterangan                                                    |
+| --------------- | ------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `/api/register` | POST   | `{ "email": "user@mail.com", "password": "123456", "confirm_password": "123456" }` | Registrasi user baru                                          |
+| `/api/login`    | POST   | `{ "email": "user@mail.com", "password": "123456" }`                               | Login, response berisi `token` yang dipakai untuk autentikasi |
+
+Untuk endpoint selain `register` dan `login`, request harus menyertakan header:
+
+```
+Authorization: Bearer <token>
+```
+
+---
 
 | Endpoint           | Method | Query / Payload                                               | Keterangan                                                                                                                     |
 | ------------------ | ------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
