@@ -57,10 +57,10 @@ python manage.py runserver
 
 #### Authentication
 
-| Endpoint        | Method | Payload                                                                            | Keterangan                                                    |
-| --------------- | ------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `/api/register` | POST   | `{ "email": "user@mail.com", "password": "123456", "confirm_password": "123456" }` | Registrasi user baru                                          |
-| `/api/login`    | POST   | `{ "email": "user@mail.com", "password": "123456" }`                               | Login, response berisi `token` yang dipakai untuk autentikasi |
+| Endpoint        | Method | Payload                                                                            | Keterangan                                                                    |
+| --------------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `/api/register` | POST   | `{ "email": "user@mail.com", "password": "123456", "confirm_password": "123456" }` | Registrasi user baru , response berisi `token` yang dipakai untuk autentikasi |
+| `/api/login`    | POST   | `{ "email": "user@mail.com", "password": "123456" }`                               | Login, response berisi `token` yang dipakai untuk autentikasi                 |
 
 Untuk endpoint selain `register` dan `login`, request harus menyertakan header:
 
