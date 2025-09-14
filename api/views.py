@@ -47,7 +47,7 @@ def search_destination(request):
             }
         )
 
-    url = f"{settings.RAJA_ONGKIR_BASE_URL}/domestic-destination"
+    url = f"{settings.RAJA_ONGKIR_BASE_URL}destination/domestic-destination"
     headers = {"key": settings.RAJA_ONGKIR_API_KEY}
     params = {"search": q}
 
@@ -72,3 +72,77 @@ def search_destination(request):
     ]
 
     return Response(results)
+
+
+@api_view(["POST"])
+def calculate_freight(request):
+    data = request.data
+    country_id = data.get("country_id")
+    category_id = data.get("category_id")
+    destination_id = data.get("destination_id")
+    weight = data.get("weight")
+
+    if not all([country_id, category_id, destination_id, weight]):
+        return Response({"message": "Missing required fields"}, status=400)
+
+    try:
+        country_id = int(country_id)
+        category_id = int(category_id)
+        destination_id = int(destination_id)
+        weight = int(weight)
+    except (ValueError, TypeError):
+        return Response({"message": "IDs dan weight harus angka"}, status=400)
+
+    try:
+        category = Category.objects.get(id=category_id, country_id=country_id)
+    except Category.DoesNotExist:
+        return Response({"message": "Category not found"}, status=404)
+
+    origin = 17682
+
+    payload_preview = {
+        "origin": origin,
+        "destination": destination_id,
+        "weight": weight * 1000,
+        "courier": "jne",
+        "price": "lowest",
+    }
+    # print("Payload to be sent:", payload_preview)
+
+    url = f"{settings.RAJA_ONGKIR_BASE_URL}calculate/domestic-cost"
+    headers = {
+        "key": settings.RAJA_ONGKIR_API_KEY,
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+    payload = payload_preview
+
+    try:
+        r = requests.post(url, data=payload, headers=headers, timeout=10)
+        # print("Raw response:", r.text)
+        r.raise_for_status()
+        data = r.json().get("data", [])
+
+        if data:
+            domestic_price = data[0].get("cost", 0)
+        else:
+            domestic_price = 0
+
+    except requests.exceptions.RequestException as e:
+        print("RequestException:", str(e))
+        if hasattr(e, "response") and e.response is not None:
+            print("Response content:", e.response.text)
+        domestic_price = 0
+
+    international_price = weight * category.price_per_kilo
+    total_price = international_price + domestic_price
+
+    response_data = {
+        "origin": origin,
+        "destination": destination_id,
+        "category_name": category.category_title,
+        "international_price": international_price,
+        "domestic_price": domestic_price,
+        "total_price": total_price,
+    }
+
+    return Response(response_data)
