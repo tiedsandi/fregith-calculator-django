@@ -177,7 +177,8 @@ def register_api(request):
         email=email,
         password=make_password(password),
     )
-    return Response({"message": "Register success", "user_id": user.id})
+    token = AccessToken.for_user(user)
+    return Response({"message": "Register success", "token": str(token)})
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
