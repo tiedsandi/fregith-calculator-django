@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -53,7 +54,10 @@ AUTH_USER_MODEL = "dashboard.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
 }
 
 MIDDLEWARE = [
@@ -146,4 +150,10 @@ LOGOUT_REDIRECT_URL = "/login/"
 
 RAJA_ONGKIR_API_KEY = os.getenv("RAJA_ONGKIR_API_KEY")
 RAJA_ONGKIR_BASE_URL = os.getenv("RAJA_ONGKIR_BASE_URL")
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(0),       
+}

@@ -1,11 +1,18 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import get_user_model, authenticate
+from rest_framework_simplejwt.tokens import AccessToken
+from django.contrib.auth.hashers import make_password
+from rest_framework.permissions import AllowAny
+from dashboard.models import Country, Category
 from rest_framework.response import Response
 from django.conf import settings
-from dashboard.models import Country, Category
 import requests
 
 
+User = get_user_model()
+
 @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
 def search_countries(request):
     q = request.GET.get("search", "")
     countries = Country.objects.filter(country_name__icontains=q)
@@ -149,3 +156,40 @@ def calculate_freight(request):
     }
 
     return Response(response_data)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def register_api(request):
+    email = request.data.get("email")
+    password = request.data.get("password")
+    confirm_password = request.data.get("confirm_password")
+
+    if not email or not password or not confirm_password:
+        return Response({"error": "Email, password, and confirm password required"}, status=400)
+
+    if password != confirm_password:
+        return Response({"error": "Passwords do not match"}, status=400)
+
+    if User.objects.filter(email=email).exists():
+        return Response({"error": "Email already registered"}, status=400)
+
+    user = User.objects.create(
+        email=email,
+        password=make_password(password),
+    )
+    return Response({"message": "Register success", "user_id": user.id})
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def login_api(request):
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    user = authenticate(request, email=email, password=password)
+    if user is None:
+        return Response({"error": "Invalid credentials"}, status=401)
+
+    token = AccessToken.for_user(user)
+    return Response({
+        "token": str(token),
+    })
