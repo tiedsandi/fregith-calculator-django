@@ -1,0 +1,41 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<div class="page-container">
+  <h2>Countries</h2>
+  <a class="btn btn-primary" href="{% url 'country_add' %}">Add Country</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Flag</th>
+        <th>Currency</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for country in countries %}
+      <tr>
+        <td>{{ country.country_name }}</td>
+        <td>
+            {% if country.country_flag %}
+            <img src="{{ country.country_flag }}" alt="{{ country.country_name }}" style="height:25px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+          {% else %}
+            None
+          {% endif %}
+        </td>
+        <td>{{ country.country_currency }}</td>
+        <td>
+          <a class="btn btn-primary" href="{% url 'country_edit' country.pk %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'country_delete' country.pk %}">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" style="text-align:center;">No countries found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

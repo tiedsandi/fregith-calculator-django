@@ -1,0 +1,12 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<div class="register-form">
+  <h2>Delete Country</h2>
+  <p>Are you sure you want to delete "<strong>{{ country.country_name }}</strong>"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary" style="background:red;">Yes, Delete</button>
+    <a href="{% url 'country_list' %}" class="btn">Cancel</a>
+  </form>
+</div>
+{% endblock %}
