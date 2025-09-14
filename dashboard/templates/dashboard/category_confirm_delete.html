@@ -1,5 +1,5 @@
 {% extends "dashboard/base.html" %} {% block content %}
-<div class="register-form">
+<div class="register-form" style="text-align: center">
   <h2>Delete Category</h2>
   <p>
     Are you sure you want to delete "<strong
@@ -8,10 +8,12 @@
   </p>
   <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary" style="background: red">
-      Yes, Delete
-    </button>
-    <a href="{% url 'category_list' %}" class="btn">Cancel</a>
+    <div style="display: flex; justify-content: center; margin-top: 12px">
+      <button type="submit" class="btn btn-primary" style="background: red">
+        Yes, Delete
+      </button>
+      <a href="{% url 'category_list' %}" class="btn btn-primary">Cancel</a>
+    </div>
   </form>
 </div>
 {% endblock %}
