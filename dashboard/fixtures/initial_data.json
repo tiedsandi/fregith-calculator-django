@@ -1,0 +1,138 @@
+[
+  {
+    "model": "dashboard.country",
+    "pk": 1,
+    "fields": {
+      "country_name": "China",
+      "country_flag": "https://flagcdn.com/cn.svg",
+      "country_currency": "CNY"
+    }
+  },
+  {
+    "model": "dashboard.country",
+    "pk": 2,
+    "fields": {
+      "country_name": "Thailand",
+      "country_flag": "https://flagcdn.com/th.svg",
+      "country_currency": "THB"
+    }
+  },
+  {
+    "model": "dashboard.country",
+    "pk": 3,
+    "fields": {
+      "country_name": "Singapore",
+      "country_flag": "https://flagcdn.com/sg.svg",
+      "country_currency": "SGD"
+    }
+  },
+  {
+    "model": "dashboard.country",
+    "pk": 4,
+    "fields": {
+      "country_name": "Jepang",
+      "country_flag": "https://flagcdn.com/jp.svg",
+      "country_currency": "JPY"
+    }
+  },
+  {
+    "model": "dashboard.country",
+    "pk": 5,
+    "fields": {
+      "country_name": "Malaysia",
+      "country_flag": "https://flagcdn.com/my.svg",
+      "country_currency": "MYR"
+    }
+  },
+
+  {
+    "model": "dashboard.category",
+    "pk": 1,
+    "fields": {
+      "country": 1,
+      "category_title": "Electronic",
+      "price_per_kilo": 250000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 2,
+    "fields": {
+      "country": 1,
+      "category_title": "Chip",
+      "price_per_kilo": 300000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 3,
+    "fields": {
+      "country": 1,
+      "category_title": "Laptop and Computer",
+      "price_per_kilo": 220000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 4,
+    "fields": {
+      "country": 2,
+      "category_title": "Garments",
+      "price_per_kilo": 200000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 5,
+    "fields": {
+      "country": 3,
+      "category_title": "Spare parts",
+      "price_per_kilo": 210000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 6,
+    "fields": {
+      "country": 4,
+      "category_title": "Coffee Beans",
+      "price_per_kilo": 50000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 7,
+    "fields": {
+      "country": 4,
+      "category_title": "Cocoa",
+      "price_per_kilo": 60000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 8,
+    "fields": {
+      "country": 5,
+      "category_title": "Palm Oil",
+      "price_per_kilo": 80000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 9,
+    "fields": {
+      "country": 5,
+      "category_title": "Rubber",
+      "price_per_kilo": 90000
+    }
+  },
+  {
+    "model": "dashboard.category",
+    "pk": 10,
+    "fields": {
+      "country": 2,
+      "category_title": "Rice",
+      "price_per_kilo": 30000
+    }
+  }
+]
