@@ -9,7 +9,10 @@ import requests
 def search_countries(request):
     q = request.GET.get("search", "")
     countries = Country.objects.filter(country_name__icontains=q)
-    results = [{"id": c.id, "country_name": c.country_name} for c in countries]
+    results = [
+        {"id": c.id, "country_name": c.country_name, "flag": c.country_flag}
+        for c in countries
+    ]
     return Response(results)
 
 

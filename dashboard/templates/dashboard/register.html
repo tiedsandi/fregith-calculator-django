@@ -1,11 +1,11 @@
 {% extends "dashboard/base.html" %}
 
 {% block content %}
-<h2>Register</h2>
+
 
 <form method="post" class="register-form">
   {% csrf_token %}
-
+  <h2>Register</h2>
   <div class="form-group">
     {{ form.email.label_tag }}
     {{ form.email }}

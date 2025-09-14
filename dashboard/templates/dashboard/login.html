@@ -1,9 +1,9 @@
 {% extends "dashboard/base.html" %} {% block content %}
-<h2>Login</h2>
+
 
 <form method="post" class="register-form">
   {% csrf_token %}
-
+  <h2>Login</h2>
   <div class="form-group">
     {{ form.username.label_tag }}
     {{ form.username }}
@@ -20,7 +20,7 @@
     {% endif %}
   </div>
 
-  <button type="submit" class="btn btn-primary">Register</button>
+  <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock %}
 
