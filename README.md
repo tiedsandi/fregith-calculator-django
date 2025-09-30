@@ -14,7 +14,7 @@ cd fregith-calculator-django
 2. Install dependencies:
 
 ```bash
-pip install django djangorestframework requests django-cors-headers djangorestframework-simplejwt
+pip install django djangorestframework requests django-cors-headers djangorestframework-simplejwt python-dotenv
 ```
 
 3. Migrasi database:
